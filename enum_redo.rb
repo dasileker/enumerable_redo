@@ -15,8 +15,21 @@ module Enumerable
         end
   end
 
+  def my_select
+      return to_enum unless block_given?
+
+      enum = self.to_enum
+      a = []
+      loop do
+        e = enum.next
+        a << e if yield(e)
+      end
+      a
+  end
 
 
+
+  
 end
 
 
@@ -30,14 +43,14 @@ my_proc = proc { |num| num > 10 }
 range = (5..10)
 
 
-# puts "\nmy_each output\:"; puts ''
-# array1.my_each { |item| puts item }
-# p array2.each { |item| item }
-# p array2.my_each(&block)
-# range.my_each { |item| puts item }
-# p range.my_each(&block)
-# (hash.my_each { |item, index| puts "#{item} : #{index} " })
-# p hash.my_each(&block)
+puts "\nmy_each output\:"; puts ''
+array1.my_each { |item| puts item }
+p array2.each { |item| item }
+p array2.my_each(&block)
+range.my_each { |item| puts item }
+p range.my_each(&block)
+(hash.my_each { |item, index| puts "#{item} : #{index} " })
+p hash.my_each(&block)
 
 puts "\nmy_each_with_index output\:"; puts ''
 array1.my_each_with_index { |item, index| puts "#{item} : #{index} " }
@@ -46,3 +59,8 @@ p array2.my_each_with_index(&block)
 range.my_each_with_index { |item| puts item }
 p range.my_each_with_index(&block)
 hash.my_each_with_index { |item, index| puts "#{item} : #{index} " }
+
+puts "\nmy_select output\:"; puts ''
+puts array1.my_select { |item| item.to_s.length > 2 }
+p array2.my_select { |item| item }
+range.my_select { |item| puts item }
