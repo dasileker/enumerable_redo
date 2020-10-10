@@ -15,14 +15,14 @@ module Enumerable
         end
   end
 
-  def my_select
-      return to_enum unless block_given?
-      result = []
-      self.my_each { |i| result << i if yield(i) }
-      result
+  def my_select 
+    return to_enum unless block_given?
+    result = []
+    self.my_each { |i| result << i if yield(i) }
+    result
   end
 
-  def my_all?
+  def my_all? 
     cnt_true = 0
     for i in self
       if block_given?
@@ -47,6 +47,23 @@ module Enumerable
     return (any == 0) ? false : true
   end
 
+  def my_none? 
+    if block_given?
+      self.my_each do |i|
+        if yield(i)
+          return false
+        end
+      end
+      return true
+    else
+      self.my_each do |i|
+        if i != false && i != nil
+          return false
+        end
+      end
+      return true
+    end
+  end
 
 
   
@@ -104,14 +121,21 @@ range = (5..10)
 # puts (%w[hi hello hey].my_any?)
 # puts ([3, 3, 3].my_any?)
 
-puts ''; puts "\nmy_none? output\:"; puts ''
-puts %w[ant bear cat].my_none? { |word| word.length == 5 }
-puts %w[ant bear cat].my_none? { |word| word.length >= 4 }
-puts range.my_none?
-puts [].my_none?
-puts [nil].my_none?
-puts [nil, false].my_none?
-puts [1, 2, 3].my_none?
-p [nil, false, nil, false].my_none?
-puts %w[hi hello hey].my_none?# false
-puts [3, 3, 3].my_none?
+# puts ''; puts "\nmy_none? output\:"; puts ''
+# puts %w[ant bear cat].my_none? { |word| word.length == 5 }
+# puts %w[ant bear cat].my_none? { |word| word.length >= 4 }
+# puts range.my_none?
+# puts [].my_none?
+# puts [nil].my_none?
+# puts [nil, false].my_none?
+# puts [1, 2, 3].my_none?
+# p [nil, false, nil, false].my_none?
+# puts %w[hi hello hey].my_none?# false
+# puts [3, 3, 3].my_none?
+
+puts ''; puts "\nmy_count output\:"; puts ''
+puts %w[ant bear cat].my_count { |word| word.length }
+puts %w[ant bear cat].my_count { |word| word.length >= 4 }
+puts [1, 2, 4, 2].count(&:even?)
+p range.my_count(&block)
+puts [1, 2, 3].my_count(3)
