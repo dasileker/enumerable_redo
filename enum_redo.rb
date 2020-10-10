@@ -34,6 +34,19 @@ module Enumerable
     return cnt_true == 0 ? true : false
   end
 
+  def my_any? 
+    any = 0
+
+    for i in self
+      if block_given?
+        any += 1 if yield(i)
+      else
+        any += 1 if (i != false and not i.nil?)
+      end
+    end
+    return (any == 0) ? false : true
+  end
+
 
 
   
@@ -72,10 +85,33 @@ range = (5..10)
 # p array2.my_select { |item| item }
 # range.my_select { |item| puts item }
 
-puts ''; puts "\nmy_all? output\:"; puts ''
-puts (%w[lul what potatoes uhh].my_all? { |word| word.length >= 3 })
-puts (['lul', 'what', 'potatoes', 'uhh', nil].my_all?)
-puts ([1, 2, 3].my_all?)
-puts (%w[hi hello hey].my_all?)
-p [1, false, 'hi', []].my_all?
-puts ([3, 3, 3].my_all?)
+# puts ''; puts "\nmy_all? output\:"; puts ''
+# puts (%w[lul what potatoes uhh].my_all? { |word| word.length >= 3 })
+# puts (['lul', 'what', 'potatoes', 'uhh', nil].my_all?)
+# puts ([1, 2, 3].my_all?)
+# puts (%w[hi hello hey].my_all?)
+# p [1, false, 'hi', []].my_all?
+# puts ([3, 3, 3].my_all?)
+
+# puts ''; puts "\nmy_any? output\:"; puts ''
+# puts %w[ant bear cat].my_any? { |word| word.length >= 3 }
+# puts %w[ant bear cat].my_any? { |word| word.length >= 4 }
+# puts range.my_any?
+# puts [].my_any?
+# puts [nil].my_any?
+# puts [nil, false].my_any?
+# puts ([1, 2, 3].my_any?)
+# puts (%w[hi hello hey].my_any?)
+# puts ([3, 3, 3].my_any?)
+
+puts ''; puts "\nmy_none? output\:"; puts ''
+puts %w[ant bear cat].my_none? { |word| word.length == 5 }
+puts %w[ant bear cat].my_none? { |word| word.length >= 4 }
+puts range.my_none?
+puts [].my_none?
+puts [nil].my_none?
+puts [nil, false].my_none?
+puts [1, 2, 3].my_none?
+p [nil, false, nil, false].my_none?
+puts %w[hi hello hey].my_none?# false
+puts [3, 3, 3].my_none?
