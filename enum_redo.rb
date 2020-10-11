@@ -1,5 +1,4 @@
-# rubocop : disable  Metrics/ModuleLength, Layout/EmptyLinesAroundModuleBody, Layout/EmptyLineAfterGuardClause,  Layout/EmptyLines,  Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Layout/IndentationConsistency, Style/For, Layout/IndentationWidth, Style/NumericPredicate, Style/IfInsideElse, Style/InverseMethods, Style/IdenticalConditionalBranches, Metrics/PerceivedComplexity
-
+# rubocop : disable  Metrics/ModuleLength, Layout/EmptyLinesAroundModuleBody, Layout/EmptyLineAfterGuardClause,  Layout/EmptyLines,  Metrics/CyclomaticComplexity, Metrics/MethodLength, Layout/IndentationConsistency, Style/For, Layout/IndentationWidth, Style/NumericPredicate, Style/IfInsideElse, Style/InverseMethods, Style/IdenticalConditionalBranches, Metrics/PerceivedComplexity
 
 module Enumerable
 
@@ -177,4 +176,4 @@ module Enumerable
 end
 
 
-# rubocop : enable  Metrics/ModuleLength, Layout/EmptyLinesAroundModuleBody, Layout/EmptyLineAfterGuardClause,  Layout/EmptyLines,  Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Layout/IndentationConsistency, Style/For, Layout/IndentationWidth, Style/NumericPredicate, Style/IfInsideElse, Style/InverseMethods, Style/IdenticalConditionalBranches, Metrics/PerceivedComplexity
+# rubocop : enable  Metrics/ModuleLength, Layout/EmptyLinesAroundModuleBody, Layout/EmptyLineAfterGuardClause,  Layout/EmptyLines,  Metrics/CyclomaticComplexity, Metrics/MethodLength, Layout/IndentationConsistency, Style/For, Layout/IndentationWidth, Style/NumericPredicate, Style/IfInsideElse, Style/InverseMethods, Style/IdenticalConditionalBranches, Metrics/PerceivedComplexity
