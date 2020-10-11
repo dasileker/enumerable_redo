@@ -1,4 +1,4 @@
-# rubocop : disable  Metrics/ModuleLength, Layout/EmptyLinesAroundModuleBody, Layout/EmptyLineAfterGuardClause,  Layout/EmptyLines,  Lint/ParenthesesAsGroupedExpression, Lint/AmbiguousBlockAssociation, Style/Semicolon, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Layout/IndentationConsistency, Style/For, Layout/IndentationWidth, Style/NumericPredicate, Style/IfInsideElse, Style/InverseMethods, Style/IdenticalConditionalBranches, Style/MixinUsage,  Lint/UselessAssignment, Metrics/PerceivedComplexity
+# rubocop : disable  Metrics/ModuleLength, Layout/EmptyLinesAroundModuleBody, Layout/EmptyLineAfterGuardClause,  Layout/EmptyLines,  Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Layout/IndentationConsistency, Style/For, Layout/IndentationWidth, Style/NumericPredicate, Style/IfInsideElse, Style/InverseMethods, Style/IdenticalConditionalBranches, Metrics/PerceivedComplexity
 
 
 module Enumerable
@@ -25,7 +25,7 @@ module Enumerable
     result
   end
 
-  def my_all? ##
+  def my_all?
     cnt_true = 0
     for i in self
       if block_given?
@@ -37,7 +37,7 @@ module Enumerable
     cnt_true == 0
   end
 
-  def my_any? ##
+  def my_any?
     any = 0
 
     for i in self
@@ -83,7 +83,7 @@ module Enumerable
     end
   end
 
-  def my_map(proc = nil, &block) ##
+  def my_map(proc = nil, &block)
     result = []
 
     for i in self
@@ -177,97 +177,4 @@ module Enumerable
 end
 
 
-include Enumerable
-
-array1 = ['hi', 34, 'potatoes', 'horses', 33]
-array2 = [2, 7, 8, 5]
-hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
-block = proc { |num| num }
-my_proc = proc { |num| num > 10 }
-range = (5..10)
-
-
-puts "\nmy_each output\:"; puts ''
-array1.my_each { |item| puts item }
-p array2.each { |item| puts item }
-p array2.my_each(&block)
-range.my_each { |item| puts item }
-p range.my_each(&block)
-(hash.my_each { |item, index| puts "#{item} : #{index} " })
-p hash.my_each(&block)
-
-puts "\nmy_each_with_index output\:"; puts ''
-array1.my_each_with_index { |item, index| puts "#{item} : #{index} " }
-p array2.my_each_with_index { |item, index| "#{item} : #{index} " }
-p array2.my_each_with_index(&block)
-range.my_each_with_index { |item| puts item }
-p range.my_each_with_index(&block)
-hash.my_each_with_index { |item, index| puts "#{item} : #{index} " }
-
-puts "\nmy_select output\:"; puts ''
-puts array1.my_select { |item| item.to_s.length > 2 }
-p array2.my_select { |item| item }
-range.my_select { |item| puts item }
-
-puts ''; puts "\nmy_all? output\:"; puts ''
-puts (%w[lul what potatoes uhh].my_all? { |word| word.length >= 3 })
-puts ['lul', 'what', 'potatoes', 'uhh', nil].my_all?
-puts [1, 2, 3].my_all?
-puts %w[hi hello hey].my_all?
-p [1, false, 'hi', []].my_all?
-puts [3, 3, 3].my_all?
-
-puts ''; puts "\nmy_any? output\:"; puts ''
-puts %w[ant bear cat].my_any? { |word| word.length >= 3 }
-puts %w[ant bear cat].my_any? { |word| word.length >= 4 }
-puts range.my_any?
-puts [].my_any?
-puts [nil].my_any?
-puts [nil, false].my_any?
-puts [1, 2, 3].my_any?
-puts %w[hi hello hey].my_any?
-puts [3, 3, 3].my_any?
-
-puts ''; puts "\nmy_none? output\:"; puts ''
-puts %w[ant bear cat].my_none? { |word| word.length == 5 }
-puts %w[ant bear cat].my_none? { |word| word.length >= 4 }
-puts range.my_none?
-puts [].my_none?
-puts [nil].my_none?
-puts [nil, false].my_none?
-p [1, 2, 3].my_none?
-p [nil, false, nil, false].my_none?
-puts %w[hi hello hey].my_none? # false
-puts [3, 3, 3].my_none?
-
-puts ''; puts "\nmy_count output\:"; puts ''
-puts %w[ant bear cat].my_count(&:length)
-puts %w[ant bear cat].my_count { |word| word.length >= 4 }
-puts [1, 2, 4, 2].count(&:even?)
-p range.my_count(&block)
-puts [1, 2, 3].my_count(3)
-
-
-my_proc = proc { |i| i * i }
-
-puts ''; puts "\nmy_map output\:"; puts ''
-p (1..4).my_map { |i| i * i }
-p (1..4).my_map { 'cat' }
-p (1..4).my_map(&my_proc)
-array2.my_map(my_proc) { |num| num < 10 }
-
-longest = %w[cat sheep bear].my_inject do |memo, word|
-  memo.length > word.length ? memo : word
-end
-
-puts "\nmy_inject output\:"; puts ''
-puts (5..10).my_inject { |sum, n| sum + n }
-puts (5..10).my_inject { |product, n| product * n }
-puts [1, 2, 3].my_inject(20, :*)
-puts longest
-
-
-puts "\nmultiply_els output\: " + multiply_els([2, 4, 5]).to_s
-puts
-
-# rubocop : enable  Metrics/ModuleLength, Layout/EmptyLinesAroundModuleBody, Layout/EmptyLineAfterGuardClause,  Layout/EmptyLines,  Lint/ParenthesesAsGroupedExpression, Lint/AmbiguousBlockAssociation, Style/Semicolon, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Layout/IndentationConsistency, Style/For, Layout/IndentationWidth, Style/NumericPredicate, Style/IfInsideElse, Style/InverseMethods, Style/IdenticalConditionalBranches, Style/MixinUsage,  Lint/UselessAssignment, Metrics/PerceivedComplexity
+# rubocop : enable  Metrics/ModuleLength, Layout/EmptyLinesAroundModuleBody, Layout/EmptyLineAfterGuardClause,  Layout/EmptyLines,  Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Layout/IndentationConsistency, Style/For, Layout/IndentationWidth, Style/NumericPredicate, Style/IfInsideElse, Style/InverseMethods, Style/IdenticalConditionalBranches, Metrics/PerceivedComplexity
