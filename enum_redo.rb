@@ -1,4 +1,4 @@
-# rubocop : disable Layout/EmptyLinesAroundModuleBody, Layout/EmptyLineAfterGuardClause,  Layout/EmptyLines,  Lint/ParenthesesAsGroupedExpression, Lint/AmbiguousBlockAssociation, Style/Semicolon, Layout/IndentationConsistency, Style/For, Layout/IndentationWidth, Style/NumericPredicate, Style/IfInsideElse, Style/InverseMethods, Style/IdenticalConditionalBranches, Style/MixinUsage,  Lint/UselessAssignment
+# rubocop : disable  Metrics/ModuleLength, Layout/EmptyLinesAroundModuleBody, Layout/EmptyLineAfterGuardClause,  Layout/EmptyLines,  Lint/ParenthesesAsGroupedExpression, Lint/AmbiguousBlockAssociation, Style/Semicolon, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Layout/IndentationConsistency, Style/For, Layout/IndentationWidth, Style/NumericPredicate, Style/IfInsideElse, Style/InverseMethods, Style/IdenticalConditionalBranches, Style/MixinUsage,  Lint/UselessAssignment, Metrics/PerceivedComplexity
 
 
 module Enumerable
@@ -25,7 +25,7 @@ module Enumerable
     result
   end
 
-  def my_all?
+  def my_all? ##
     cnt_true = 0
     for i in self
       if block_given?
@@ -37,7 +37,7 @@ module Enumerable
     cnt_true == 0
   end
 
-  def my_any?
+  def my_any? ##
     any = 0
 
     for i in self
@@ -83,7 +83,7 @@ module Enumerable
     end
   end
 
-  def my_map(proc = nil, &block)
+  def my_map(proc = nil, &block) ##
     result = []
 
     for i in self
@@ -92,6 +92,86 @@ module Enumerable
       result << yield(i) if !proc and block_given?
     end
     result
+  end
+
+  def my_inject(symbol = nil, initial_value = nil)
+    if symbol.class != Symbol
+      temp = symbol
+      symbol = initial_value
+      initial_value = temp
+    end
+    value_provided = false
+    value_provided = true unless initial_value.nil?
+    memo = initial_value || first
+    case symbol
+    when :+
+      if !value_provided
+        drop(1).my_each do |n|
+          memo += n
+        end
+      else
+        my_each do |n|
+          memo += n
+        end
+      end
+    when :*
+      if !value_provided
+        drop(1).my_each do |n|
+          memo *= n
+        end
+      else
+        my_each do |n|
+          memo *= n
+        end
+      end
+    when :/
+      if !value_provided
+        drop(1).my_each do |n|
+          memo /= n
+        end
+      else
+        my_each do |n|
+          memo /= n
+        end
+      end
+    when :-
+      if !value_provided
+        drop(1).my_each do |n|
+          memo -= n
+        end
+      else
+        my_each do |n|
+          memo -= n
+        end
+      end
+    when :**
+      if !value_provided
+        drop(1).my_each do |n|
+          memo **= n
+        end
+      else
+        my_each do |n|
+          memo **= n
+        end
+      end
+    else
+      if !value_provided
+        drop(1).my_each do |n|
+          memo = yield(memo, n)
+        end
+      else
+        my_each do |n|
+          memo = yield(memo, n)
+        end
+      end
+    end
+    memo
+  end
+
+  def multiply_els(arr)
+    arr.my_inject do |memo, n|
+      memo * n
+    end
   end
 
 end
@@ -171,23 +251,23 @@ puts [1, 2, 3].my_count(3)
 my_proc = proc { |i| i * i }
 
 puts ''; puts "\nmy_map output\:"; puts ''
-p (1..4).my_map { |i| i * i } #=> [1, 4, 9, 16]
-p (1..4).my_map { 'cat' } #=> ["cat", "cat", "cat", "cat"]
+p (1..4).my_map { |i| i * i }
+p (1..4).my_map { 'cat' }
 p (1..4).my_map(&my_proc)
 array2.my_map(my_proc) { |num| num < 10 }
 
-# longest = %w[cat sheep bear].my_inject do |memo, word|
-#   memo.length > word.length ? memo : word
-# end
+longest = %w[cat sheep bear].my_inject do |memo, word|
+  memo.length > word.length ? memo : word
+end
 
-# puts ''; puts "\nmy_inject output\:"; puts ''
-# puts ((5..10).my_inject { |sum, n| sum + n })
-# puts (5..10).my_inject { |product, n| product * n }
-# puts [1, 2, 3].my_inject(20, :*)
-# puts longest
+puts "\nmy_inject output\:"; puts ''
+puts (5..10).my_inject { |sum, n| sum + n }
+puts (5..10).my_inject { |product, n| product * n }
+puts [1, 2, 3].my_inject(20, :*)
+puts longest
 
 
-# puts ''; puts "\nmultiply_els output\:"; puts ''
-# puts multiply_els([2, 4, 5])
+puts "\nmultiply_els output\: " + multiply_els([2, 4, 5]).to_s
+puts
 
-# rubocop : enable Layout/EmptyLinesAroundModuleBody, Layout/EmptyLineAfterGuardClause,  Layout/EmptyLines,  Lint/ParenthesesAsGroupedExpression, Lint/AmbiguousBlockAssociation, Style/Semicolon, Layout/IndentationConsistency, Style/For, Layout/IndentationWidth, Style/NumericPredicate, Style/IfInsideElse, Style/InverseMethods, Style/IdenticalConditionalBranches, Style/MixinUsage,  Lint/UselessAssignment
+# rubocop : enable  Metrics/ModuleLength, Layout/EmptyLinesAroundModuleBody, Layout/EmptyLineAfterGuardClause,  Layout/EmptyLines,  Lint/ParenthesesAsGroupedExpression, Lint/AmbiguousBlockAssociation, Style/Semicolon, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Layout/IndentationConsistency, Style/For, Layout/IndentationWidth, Style/NumericPredicate, Style/IfInsideElse, Style/InverseMethods, Style/IdenticalConditionalBranches, Style/MixinUsage,  Lint/UselessAssignment, Metrics/PerceivedComplexity
