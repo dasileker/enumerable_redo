@@ -1,3 +1,6 @@
+# rubocop : disable Layout/EmptyLinesAroundModuleBody, Layout/EmptyLineAfterGuardClause,  Layout/EmptyLines,  Lint/ParenthesesAsGroupedExpression, Lint/AmbiguousBlockAssociation, Style/Semicolon, Layout/IndentationConsistency, Style/For, Layout/IndentationWidth, Style/NumericPredicate, Style/IfInsideElse, Style/InverseMethods, Style/IdenticalConditionalBranches, Style/MixinUsage,  Lint/UselessAssignment
+
+
 module Enumerable
 
   def my_each
@@ -15,14 +18,14 @@ module Enumerable
         end
   end
 
-  def my_select 
+  def my_select
     return to_enum unless block_given?
     result = []
-    self.my_each { |i| result << i if yield(i) }
+    my_each { |i| result << i if yield(i) }
     result
   end
 
-  def my_all? 
+  def my_all?
     cnt_true = 0
     for i in self
       if block_given?
@@ -31,64 +34,66 @@ module Enumerable
         cnt_true += 1 unless i
       end
     end
-    return cnt_true == 0 ? true : false
+    cnt_true == 0
   end
 
-  def my_any? 
+  def my_any?
     any = 0
 
     for i in self
       if block_given?
         any += 1 if yield(i)
       else
-        any += 1 if (i != false and not i.nil?)
+        any += 1 if i != false and !i.nil?
       end
     end
-    return (any == 0) ? false : true
+    !(any == 0)
   end
 
-  def my_none? 
+  def my_none?
     if block_given?
-      self.my_each do |i|
-        if yield(i)
-          return false
-        end
+      my_each do |i|
+        return false if yield(i)
       end
-      return true
+      true
     else
-      self.my_each do |i|
-        if i != false && i != nil
-          return false
-        end
+      my_each do |i|
+        return false if i != false && !i.nil?
       end
-      return true
+      true
     end
   end
 
   def my_count(number = true)
     my_count = 0
-    if block_given? 
-      self.my_each do |i|
-        if yield(i)
-          my_count += 1
-        end
+    if block_given?
+      my_each do |i|
+        my_count += 1 if yield(i)
       end
-      my_count 
+      my_count
     else
-      self.my_each do |i|
-        if i == number
-          my_count += 1
-        end
+      my_each do |i|
+        my_count += 1 if i == number
       end
       if number == 0
-        return self.length 
+        length
       else
-        return my_count 
+        my_count
       end
-    end 
+    end
   end
 
-  
+  def my_map(proc = nil, &block)
+    result = []
+
+    for i in self
+      result << block.call(proc.call(i)) if proc and block_given?
+      result << proc.call(i) unless block_given?
+      result << yield(i) if !proc and block_given?
+    end
+    result
+  end
+
 end
 
 
@@ -102,62 +107,87 @@ my_proc = proc { |num| num > 10 }
 range = (5..10)
 
 
-# puts "\nmy_each output\:"; puts ''
-# array1.my_each { |item| puts item }
-# p array2.each { |item| item }
-# p array2.my_each(&block)
-# range.my_each { |item| puts item }
-# p range.my_each(&block)
-# (hash.my_each { |item, index| puts "#{item} : #{index} " })
-# p hash.my_each(&block)
+puts "\nmy_each output\:"; puts ''
+array1.my_each { |item| puts item }
+p array2.each { |item| puts item }
+p array2.my_each(&block)
+range.my_each { |item| puts item }
+p range.my_each(&block)
+(hash.my_each { |item, index| puts "#{item} : #{index} " })
+p hash.my_each(&block)
 
-# puts "\nmy_each_with_index output\:"; puts ''
-# array1.my_each_with_index { |item, index| puts "#{item} : #{index} " }
-# p array2.my_each_with_index { |item, index| "#{item} : #{index} " }
-# p array2.my_each_with_index(&block)
-# range.my_each_with_index { |item| puts item }
-# p range.my_each_with_index(&block)
-# hash.my_each_with_index { |item, index| puts "#{item} : #{index} " }
+puts "\nmy_each_with_index output\:"; puts ''
+array1.my_each_with_index { |item, index| puts "#{item} : #{index} " }
+p array2.my_each_with_index { |item, index| "#{item} : #{index} " }
+p array2.my_each_with_index(&block)
+range.my_each_with_index { |item| puts item }
+p range.my_each_with_index(&block)
+hash.my_each_with_index { |item, index| puts "#{item} : #{index} " }
 
-# puts "\nmy_select output\:"; puts ''
-# puts array1.my_select { |item| item.to_s.length > 2 }
-# p array2.my_select { |item| item }
-# range.my_select { |item| puts item }
+puts "\nmy_select output\:"; puts ''
+puts array1.my_select { |item| item.to_s.length > 2 }
+p array2.my_select { |item| item }
+range.my_select { |item| puts item }
 
-# puts ''; puts "\nmy_all? output\:"; puts ''
-# puts (%w[lul what potatoes uhh].my_all? { |word| word.length >= 3 })
-# puts (['lul', 'what', 'potatoes', 'uhh', nil].my_all?)
-# puts ([1, 2, 3].my_all?)
-# puts (%w[hi hello hey].my_all?)
-# p [1, false, 'hi', []].my_all?
-# puts ([3, 3, 3].my_all?)
+puts ''; puts "\nmy_all? output\:"; puts ''
+puts (%w[lul what potatoes uhh].my_all? { |word| word.length >= 3 })
+puts ['lul', 'what', 'potatoes', 'uhh', nil].my_all?
+puts [1, 2, 3].my_all?
+puts %w[hi hello hey].my_all?
+p [1, false, 'hi', []].my_all?
+puts [3, 3, 3].my_all?
 
-# puts ''; puts "\nmy_any? output\:"; puts ''
-# puts %w[ant bear cat].my_any? { |word| word.length >= 3 }
-# puts %w[ant bear cat].my_any? { |word| word.length >= 4 }
-# puts range.my_any?
-# puts [].my_any?
-# puts [nil].my_any?
-# puts [nil, false].my_any?
-# puts ([1, 2, 3].my_any?)
-# puts (%w[hi hello hey].my_any?)
-# puts ([3, 3, 3].my_any?)
+puts ''; puts "\nmy_any? output\:"; puts ''
+puts %w[ant bear cat].my_any? { |word| word.length >= 3 }
+puts %w[ant bear cat].my_any? { |word| word.length >= 4 }
+puts range.my_any?
+puts [].my_any?
+puts [nil].my_any?
+puts [nil, false].my_any?
+puts [1, 2, 3].my_any?
+puts %w[hi hello hey].my_any?
+puts [3, 3, 3].my_any?
 
-# puts ''; puts "\nmy_none? output\:"; puts ''
-# puts %w[ant bear cat].my_none? { |word| word.length == 5 }
-# puts %w[ant bear cat].my_none? { |word| word.length >= 4 }
-# puts range.my_none?
-# puts [].my_none?
-# puts [nil].my_none?
-# puts [nil, false].my_none?
-# puts [1, 2, 3].my_none?
-# p [nil, false, nil, false].my_none?
-# puts %w[hi hello hey].my_none?# false
-# puts [3, 3, 3].my_none?
+puts ''; puts "\nmy_none? output\:"; puts ''
+puts %w[ant bear cat].my_none? { |word| word.length == 5 }
+puts %w[ant bear cat].my_none? { |word| word.length >= 4 }
+puts range.my_none?
+puts [].my_none?
+puts [nil].my_none?
+puts [nil, false].my_none?
+p [1, 2, 3].my_none?
+p [nil, false, nil, false].my_none?
+puts %w[hi hello hey].my_none? # false
+puts [3, 3, 3].my_none?
 
 puts ''; puts "\nmy_count output\:"; puts ''
-puts %w[ant bear cat].my_count { |word| word.length }
+puts %w[ant bear cat].my_count(&:length)
 puts %w[ant bear cat].my_count { |word| word.length >= 4 }
 puts [1, 2, 4, 2].count(&:even?)
 p range.my_count(&block)
 puts [1, 2, 3].my_count(3)
+
+
+my_proc = proc { |i| i * i }
+
+puts ''; puts "\nmy_map output\:"; puts ''
+p (1..4).my_map { |i| i * i } #=> [1, 4, 9, 16]
+p (1..4).my_map { 'cat' } #=> ["cat", "cat", "cat", "cat"]
+p (1..4).my_map(&my_proc)
+array2.my_map(my_proc) { |num| num < 10 }
+
+# longest = %w[cat sheep bear].my_inject do |memo, word|
+#   memo.length > word.length ? memo : word
+# end
+
+# puts ''; puts "\nmy_inject output\:"; puts ''
+# puts ((5..10).my_inject { |sum, n| sum + n })
+# puts (5..10).my_inject { |product, n| product * n }
+# puts [1, 2, 3].my_inject(20, :*)
+# puts longest
+
+
+# puts ''; puts "\nmultiply_els output\:"; puts ''
+# puts multiply_els([2, 4, 5])
+
+# rubocop : enable Layout/EmptyLinesAroundModuleBody, Layout/EmptyLineAfterGuardClause,  Layout/EmptyLines,  Lint/ParenthesesAsGroupedExpression, Lint/AmbiguousBlockAssociation, Style/Semicolon, Layout/IndentationConsistency, Style/For, Layout/IndentationWidth, Style/NumericPredicate, Style/IfInsideElse, Style/InverseMethods, Style/IdenticalConditionalBranches, Style/MixinUsage,  Lint/UselessAssignment
