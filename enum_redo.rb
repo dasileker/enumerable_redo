@@ -65,6 +65,28 @@ module Enumerable
     end
   end
 
+  def my_count(number = true)
+    my_count = 0
+    if block_given? 
+      self.my_each do |i|
+        if yield(i)
+          my_count += 1
+        end
+      end
+      my_count 
+    else
+      self.my_each do |i|
+        if i == number
+          my_count += 1
+        end
+      end
+      if number == 0
+        return self.length 
+      else
+        return my_count 
+      end
+    end 
+  end
 
   
 end
