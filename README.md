@@ -1,4 +1,4 @@
-# ruby-enum-methods
+# enum-methods-redo
 Add your new methods onto the existing Enumerable module
 > The aim of this project is to create an Enumerable module that gets mixed into the Array and Hash classes (among others) and provides you with lots of handy iterator methods. To prove that there's no magic to it, you're going to rebuild those methods.
 
