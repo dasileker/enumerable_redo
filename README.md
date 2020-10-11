@@ -40,17 +40,17 @@ Add your new methods onto the existing Enumerable module
 
 ## 🚀 Our Project
 
-Our project can be found at https://repl.it/@zerradi/MyEnumerableRuby#main.rb
+Our project can be found at 
 ## Live Demo
 
-[Live Demo Link](https://repl.it/@zerradi/MyEnumerableRuby#main.rb)
+[Live Demo Link](https://eb148b80-1a42-4a85-a23b-1c0d91d2294f.ws-eu01.gitpod.io/#/workspace/enumerable_redo)
 
 
 ## To run the project in local
 
-- clone the repository from here [repo link](git@github.com:ggotora/ruby_enum_methods.git)
+- clone the repository from here [repo link](git@github.com:dasileker/enumerable_redo.git)
 
-- Enter to GIT bash and hit: git clone git@github.com:ggotora/ruby_enum_methods.git
+- Enter to GIT bash and hit: git clone git@github.com:dasileker/enumerable_redo.git
 
 - Open vscode and you have it now
 
