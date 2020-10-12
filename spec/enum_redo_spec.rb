@@ -103,6 +103,39 @@ describe Enumerable do
       it 'returns false ' do
         expect(array2.my_all? { |x| x > 2 }).to eq(false)
       end
+      it 'should return true' do
+      expect(%w[ant bear cat].any? { |word| word.length >= 4 }).to eq(true)
     end
+    end
+  end
+
+  describe '#my_any?' do
+    it 'should return true' do
+      expect(%w[ant bear cat].any? { |word| word.length >= 3 }).to eq(true)
+    end
+    it 'should return false' do
+      expect(%w[ant bear cat].any? { |word| word == 'dog' }).to eq(false)
+    end
+    it "should return true" do
+      expect([1, 2, 3].my_any?).to eq(true)
+    end
+    it 'should return true' do
+      expect(%w[hi hello hey].my_any?).to eq(true)
+    end
+
+    it 'should return false' do
+      expect([nil, false].my_any?).to eq(false)
+    end
+
+    it 'should return false' do
+      expect([nil].my_any?).to eq(false)
+    end
+    it 'should return false' do
+      expect([].my_any?).to eq(false)
+    end
+  end
+
+  describe '#my_none?' do
+    
   end
 end
