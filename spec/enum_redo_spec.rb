@@ -4,7 +4,7 @@ require './enum_redo.rb'
 
 describe Enumerable do
   let(:array1) { ['hi', 34, 'potatoes', 'horses', 33] }
-  let(:array2) { [2, 7, 8, 5] }
+  let(:array2) { [2, 7, 8, 5, 3] }
   let(:empty) { [] }
   let(:nil_array) { [1, 2, nil, 3, 4, 5] }
   let(:false_array) { [nil, nil, false] }
@@ -156,4 +156,30 @@ describe Enumerable do
       expect([nil,false].my_none?).to eq(true)
     end
   end
+
+  describe '#my_count' do
+    it 'should return the elements in array' do
+      expect(array2.my_count).not_to eq(5)
+    end
+    it 'should return the elements in array' do
+      expect([1, 2, 3].my_count(3)).to eq(1)
+    end
+    it 'should return the elements in array' do
+      expect(empty.my_count(3)).to eq(0)
+    end
+    it 'should return the elements in array' do
+      expect(false_array.my_count(nil)).to eq(2)
+    end
+    it "returns number of elements yielding a true value" do
+        expect(array2.my_count { |x| x.even? }).to eql 2
+    end
+    it 'returns number of elements yielding a true value' do
+        expect(array2.my_count { |x| x.eql? 10 }).to eql 0
+    end
+    it 'returns number of elements yielding a true value' do
+        expect(false_array.my_count { |x| x.eql? nil }).to eql 2
+    end
+  end
+
+  
 end
