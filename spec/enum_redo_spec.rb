@@ -1,5 +1,7 @@
 # !/spec/enum_redo_spec.rb
 
+# rubocop : disable Layout/LineLength
+
 require './enum_redo.rb'
 
 describe Enumerable do
@@ -105,8 +107,8 @@ describe Enumerable do
         expect(array2.my_all? { |x| x > 2 }).to eq(false)
       end
       it 'should return true' do
-      expect(%w[ant bear cat].any? { |word| word.length >= 4 }).to eq(true)
-    end
+        expect(%w[ant bear cat].any? { |word| word.length >= 4 }).to eq(true)
+      end
     end
   end
 
@@ -117,7 +119,7 @@ describe Enumerable do
     it 'should return false' do
       expect(%w[ant bear cat].any? { |word| word == 'dog' }).to eq(false)
     end
-    it "should return true" do
+    it 'should return true' do
       expect([1, 2, 3].my_any?).to eq(true)
     end
     it 'should return true' do
@@ -145,7 +147,7 @@ describe Enumerable do
       expect(%w[ant bear cat].my_none? { |word| word.length >= 4 }).to eq(false)
     end
     it 'should return false' do
-      expect([true,nil].my_none?).to eq(false)
+      expect([true, nil].my_none?).to eq(false)
     end
     it 'should return true' do
       expect([].my_none?).to eq(true)
@@ -154,7 +156,7 @@ describe Enumerable do
       expect([nil].my_none?).to eq(true)
     end
     it 'should return true' do
-      expect([nil,false].my_none?).to eq(true)
+      expect([nil, false].my_none?).to eq(true)
     end
   end
 
@@ -171,14 +173,14 @@ describe Enumerable do
     it 'should return the elements in array' do
       expect(false_array.my_count(nil)).to eq(2)
     end
-    it "returns number of elements yielding a true value" do
-        expect(array2.my_count { |x| x.even? }).to eq(2)
+    it 'returns number of elements yielding a true value' do
+      expect(array2.my_count(&:even?)).to eq(2)
     end
     it 'returns number of elements yielding a true value' do
-        expect(array2.my_count { |x| x.eql? 10 }).to eq(0)
+      expect(array2.my_count { |x| x.eql? 10 }).to eq(0)
     end
     it 'returns number of elements yielding a true value' do
-        expect(false_array.my_count { |x| x.eql? nil }).to eq(2)
+      expect(false_array.my_count { |x| x.eql? nil }).to eq(2)
     end
   end
 
@@ -187,31 +189,31 @@ describe Enumerable do
       expect((1..4).my_map { |i| i * i }).to eq([1, 4, 9, 16])
     end
     it 'should get cat cat cat' do
-      expect((1..4).my_map { 'cat'}).to eq(["cat", "cat", "cat", "cat"])
+      expect((1..4).my_map { 'cat' }).to eq(%w[cat cat cat cat])
     end
     it 'should get multiply' do
       expect((1..4).my_map(&block)).to eq([1, 2, 3, 4])
     end
     it 'should get true and false' do
-      expect((1..10).my_map { |i| i >= 3 && i <= 7 }).to eq([false,false,true,true,true,true,true,false,false,false])
+      expect((1..10).my_map { |i| i >= 3 && i <= 7 }).to eq([false, false, true, true, true, true, true, false, false, false])
     end
   end
 
   describe '#my_inject' do
-    it "combines all elements by applying block instructions" do
-        expect(array2.my_inject { |sum, x| sum + x }).to eq(22)
+    it 'combines all elements by applying block instructions' do
+      expect(array2.my_inject { |sum, x| sum + x }).to eq(22)
     end
     it 'combines all instructions' do
-        expect(array2.my_inject { |product, x| product * x }).to eql(0)
+      expect(array2.my_inject { |product, x| product * x }).to eql(0)
     end
-    it "combines all elements by applying block instructions to initial value" do
-        expect(array2.my_inject(2) { |sum, x| sum + x }).to eq(24)
+    it 'combines all elements by applying block instructions to initial value' do
+      expect(array2.my_inject(2) { |sum, x| sum + x }).to eq(24)
     end
     it 'combines all elements by applying block instructions to initial value 2' do
-        expect(array2.my_inject(0) { |sum, x| sum + x }).to eq(22)
+      expect(array2.my_inject(0) { |sum, x| sum + x }).to eq(22)
     end
     it 'combines all elements by applying block instructions to initial value 3' do
-        expect(array2.my_inject(2) { |product, x| product * x }).to eq(1120)
+      expect(array2.my_inject(2) { |product, x| product * x }).to eq(1120)
     end
   end
 
@@ -220,5 +222,6 @@ describe Enumerable do
       expect(arr.inject(:*)).to eq(40)
     end
   end
-
 end
+
+# rubocop : enable Layout/LineLength
