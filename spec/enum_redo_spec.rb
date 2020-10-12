@@ -4,7 +4,7 @@ require './enum_redo.rb'
 
 describe Enumerable do
   let(:array1) { ['hi', 34, 'potatoes', 'horses', 33] }
-  let(:array2) { [2, 7, 8, 5, 3] }
+  let(:array2) { [2, 7, 8, 5] }
   let(:empty) { [] }
   let(:nil_array) { [1, 2, nil, 3, 4, 5] }
   let(:false_array) { [nil, nil, false] }
@@ -171,13 +171,34 @@ describe Enumerable do
       expect(false_array.my_count(nil)).to eq(2)
     end
     it "returns number of elements yielding a true value" do
-        expect(array2.my_count { |x| x.even? }).to eql 2
+        expect(array2.my_count { |x| x.even? }).to eq(2)
     end
     it 'returns number of elements yielding a true value' do
-        expect(array2.my_count { |x| x.eql? 10 }).to eql 0
+        expect(array2.my_count { |x| x.eql? 10 }).to eq(0)
     end
     it 'returns number of elements yielding a true value' do
-        expect(false_array.my_count { |x| x.eql? nil }).to eql 2
+        expect(false_array.my_count { |x| x.eql? nil }).to eq(2)
+    end
+  end
+
+  describe '#my_inject' do
+    it "combines all elements by applying block instructions" do
+        expect(array2.my_inject { |sum, x| sum + x }).to eq(22)
+    end
+    it 'combines all instructions' do
+        expect(array2.my_inject { |product, x| product * x }).to eql(560)
+    end
+    it "combines all elements by applying block instructions to initial value" do
+        expect(array2.my_inject(2) { |sum, x| sum + x }).to eq(24)
+    end
+    it 'combines all elements by applying block instructions to initial value 2' do
+        expect(array2.my_inject(0) { |sum, x| sum + x }).to eq(22)
+    end
+    it 'combines all elements by applying block instructions to initial value 3' do
+        expect(array2.my_inject(2) { |product, x| product * x }).to eq(1120)
+    end
+    it 'combines all elements by applying block instructions to initial value 4' do
+        expect(array2.my_inject(0) { |product, x| product * x }).to eq (0)
     end
   end
 
