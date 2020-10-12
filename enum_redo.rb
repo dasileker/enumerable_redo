@@ -94,83 +94,12 @@ module Enumerable
     result
   end
 
-  # def my_inject(symbol = nil, initial_value = nil)
-  #   if symbol.class != Symbol
-  #     temp = symbol
-  #     symbol = initial_value
-  #     initial_value = temp
-  #   end
-  #   value_provided = false
-  #   value_provided = true unless initial_value.nil?
-  #   memo = initial_value || first
-  #   case symbol
-  #   when :+
-  #     if !value_provided
-  #       drop(1).my_each do |n|
-  #         memo += n
-  #       end
-  #     else
-  #       my_each do |n|
-  #         memo += n
-  #       end
-  #     end
-  #   when :*
-  #     if !value_provided
-  #       drop(1).my_each do |n|
-  #         memo *= n
-  #       end
-  #     else
-  #       my_each do |n|
-  #         memo *= n
-  #       end
-  #     end
-  #   when :/
-  #     if !value_provided
-  #       drop(1).my_each do |n|
-  #         memo /= n
-  #       end
-  #     else
-  #       my_each do |n|
-  #         memo /= n
-  #       end
-  #     end
-  #   when :-
-  #     if !value_provided
-  #       drop(1).my_each do |n|
-  #         memo -= n
-  #       end
-  #     else
-  #       my_each do |n|
-  #         memo -= n
-  #       end
-  #     end
-  #   when :**
-  #     if !value_provided
-  #       drop(1).my_each do |n|
-  #         memo **= n
-  #       end
-  #     else
-  #       my_each do |n|
-  #         memo **= n
-  #       end
-  #     end
-  #   else
-  #     if !value_provided
-  #       drop(1).my_each do |n|
-  #         memo = yield(memo, n)
-  #       end
-  #     else
-  #       my_each do |n|
-  #         memo = yield(memo, n)
-  #       end
-  #     end
-  #   end
-  #   memo
-  # end
-
   def my_inject(result = 0, symbol = nil)
     symbol, result = result, symbol if result.is_a?(Symbol) and symbol.is_a?(Integer)
-    symbol, result = result, 0 if result.is_a?(Symbol)
+    if result.is_a?(Symbol)
+      symbol = result
+      result = 0
+    end
     new_array = to_a
     result = '' if new_array[0].is_a?(String)
     if !block_given?
