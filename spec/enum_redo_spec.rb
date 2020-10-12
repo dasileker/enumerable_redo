@@ -9,6 +9,7 @@ describe Enumerable do
   let(:nil_array) { [1, 2, nil, 3, 4, 5] }
   let(:false_array) { [nil, nil, false] }
   let(:hash) { { a: 1, b: 2, c: 3, d: 4, e: 5 } }
+  let(:arr) { [2, 4, 5] }
   let(:block) { proc { |num| num } }
   let(:my_proc) { proc { |num| num > 10 } }
   let(:range) { (5..10) }
@@ -181,12 +182,27 @@ describe Enumerable do
     end
   end
 
+  describe '#my_map' do
+    it 'should get multiply' do
+      expect((1..4).my_map { |i| i * i }).to eq([1, 4, 9, 16])
+    end
+    it 'should get cat cat cat' do
+      expect((1..4).my_map { 'cat'}).to eq(["cat", "cat", "cat", "cat"])
+    end
+    it 'should get multiply' do
+      expect((1..4).my_map(&block)).to eq([1, 2, 3, 4])
+    end
+    it 'should get true and false' do
+      expect((1..10).my_map { |i| i >= 3 && i <= 7 }).to eq([false,false,true,true,true,true,true,false,false,false])
+    end
+  end
+
   describe '#my_inject' do
     it "combines all elements by applying block instructions" do
         expect(array2.my_inject { |sum, x| sum + x }).to eq(22)
     end
     it 'combines all instructions' do
-        expect(array2.my_inject { |product, x| product * x }).to eql(560)
+        expect(array2.my_inject { |product, x| product * x }).to eql(0)
     end
     it "combines all elements by applying block instructions to initial value" do
         expect(array2.my_inject(2) { |sum, x| sum + x }).to eq(24)
@@ -197,10 +213,12 @@ describe Enumerable do
     it 'combines all elements by applying block instructions to initial value 3' do
         expect(array2.my_inject(2) { |product, x| product * x }).to eq(1120)
     end
-    it 'combines all elements by applying block instructions to initial value 4' do
-        expect(array2.my_inject(0) { |product, x| product * x }).to eq (0)
+  end
+
+  describe '#multiply_els' do
+    it 'Combines all items by the argument operator' do
+      expect(arr.inject(:*)).to eq(40)
     end
   end
 
-  
 end
