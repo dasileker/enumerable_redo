@@ -136,6 +136,24 @@ describe Enumerable do
   end
 
   describe '#my_none?' do
-    
+    it 'should return true' do
+      expect(%w[ant bear cat].my_none? { |word| word.length == 5 }).to eq(true)
+    end
+
+    it 'should return false' do
+      expect(%w[ant bear cat].my_none? { |word| word.length >= 4 }).to eq(false)
+    end
+    it 'should return false' do
+      expect([true,nil].my_none?).to eq(false)
+    end
+    it 'should return true' do
+      expect([].my_none?).to eq(true)
+    end
+    it 'should return true' do
+      expect([nil].my_none?).to eq(true)
+    end
+    it 'should return true' do
+      expect([nil,false].my_none?).to eq(true)
+    end
   end
 end
