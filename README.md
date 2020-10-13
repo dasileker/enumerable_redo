@@ -55,6 +55,18 @@ Our project can be found at https://c2aceaa3-eb5a-42f2-92ec-dc911dd4e841.ws-eu01
 - Open vscode and you have it now
 
 
+## To run the Rspec
+
+- open the  "Git Bash" or the "WSL"
+
+- Install the Rspec by typing "gem install rspec"
+
+- Install bundle
+
+- Now run rspec insde the file
+
+
+
 ## 👨🏽‍💻 👨🏿‍💻 Creators
 
 👤 **Author1**
