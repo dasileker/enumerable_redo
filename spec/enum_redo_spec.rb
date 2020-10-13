@@ -21,6 +21,42 @@ describe Enumerable do
       it 'returns an enumerator' do
         expect(array2.my_each).to be_an Enumerator
       end
+      it 'should not return to Enumerator if there no block' do
+        expect(array1.my_each).to be_an Enumerator
+      end
+      it 'should not return to Enumerator if there no block' do
+        expect(range.my_each).to be_an Enumerator
+      end
+      it 'should not return to Enumerator if there no block' do
+        expect(hash.my_each).to be_an Enumerator
+      end
+      it 'should not return to Enumerator if there no block' do
+        expect(nil_array.my_each).to be_an Enumerator
+      end
+      it 'should not return to Enumerator if there no block' do
+        expect(false_array.my_each).to be_an Enumerator
+      end
+      it 'should not return to Enumerator if there no block' do
+        expect(empty.my_each).to be_an Enumerator
+      end
+      it 'should not return to false if there no block' do
+        expect(empty.my_each).not_to eq(true)
+      end
+      it 'should not return to true if there no block' do
+        expect(empty.my_each).not_to eq(false)
+      end
+      it 'should not return to truer if there no block' do
+        expect(false_array.my_each).not_to eq(false)
+      end
+      it 'should not return to false if there no block' do
+        expect(false_array.my_each).not_to eq(true)
+      end
+      it 'should not return to false  if there no block' do
+        expect(range.my_each).not_to eq(true)
+      end
+      it 'should not return to true if there no block' do
+        expect(range.my_each).not_to eq(false)
+      end
     end
 
     describe ' it should return arrays if there block' do
