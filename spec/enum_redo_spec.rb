@@ -2,7 +2,7 @@
 
 # rubocop : disable Layout/LineLength
 
-require '../enum_redo.rb'
+require_relative '../enum_redo.rb'
 
 describe Enumerable do
   let(:array1) { ['hi', 34, 'potatoes', 'horses', 33] }
