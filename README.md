@@ -65,6 +65,8 @@ Our project can be found at https://c2aceaa3-eb5a-42f2-92ec-dc911dd4e841.ws-eu01
 
 - Now run rspec insde the file
 
+<img alt="Demonstration" src="enum.gif"/>
+
 
 
 ## 👨🏽‍💻 👨🏿‍💻 Creators
