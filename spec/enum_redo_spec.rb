@@ -20,40 +20,40 @@ describe Enumerable do
       it 'returns an enumerator' do
         expect(array2.my_each).to be_an Enumerator
       end
-      it 'should not return to Enumerator if there no block' do
+      it 'should not return to Enumerator for array' do
         expect(array1.my_each).to be_an Enumerator
       end
-      it 'should not return to Enumerator if there no block' do
+      it 'should not return to Enumerator for range' do
         expect(range.my_each).to be_an Enumerator
       end
-      it 'should not return to Enumerator if there no block' do
+      it 'should not return to Enumerator for hash' do
         expect(hash.my_each).to be_an Enumerator
       end
-      it 'should not return to Enumerator if there no block' do
+      it 'should not return to Enumerator for nil' do
         expect(nil_array.my_each).to be_an Enumerator
       end
-      it 'should not return to Enumerator if there no block' do
+      it 'should not return to Enumerator for nil in the array' do
         expect(false_array.my_each).to be_an Enumerator
       end
-      it 'should not return to Enumerator if there no block' do
+      it 'should not return to Enumerator if array is empty' do
         expect(empty.my_each).to be_an Enumerator
       end
-      it 'should not return to false if there no block' do
+      it 'should not return to false for epmty array' do
         expect(empty.my_each).not_to eq(true)
       end
-      it 'should not return to true if there no block' do
+      it 'should not return to true for array' do
         expect(empty.my_each).not_to eq(false)
       end
-      it 'should not return to truer if there no block' do
+      it 'should not return to truer  in array' do
         expect(false_array.my_each).not_to eq(false)
       end
-      it 'should not return to false if there no block' do
+      it 'should not return to false false in array' do
         expect(false_array.my_each).not_to eq(true)
       end
-      it 'should not return to false  if there no block' do
+      it 'should not return to false  in range' do
         expect(range.my_each).not_to eq(true)
       end
-      it 'should not return to true if there no block' do
+      it 'should not return to true if there range' do
         expect(range.my_each).not_to eq(false)
       end
       it 'iterates through an array and applies block instruction' do
@@ -77,14 +77,23 @@ describe Enumerable do
     it 'should return empty array if given one' do
       expect([].my_each_with_index { |x| empty << x + 1 }).to eq([])
     end
-    it 'should return empty array if given one' do
+    it 'should return empty array nothing inside the array' do
       expect(empty).to eql([])
+    end
+    it 'should return false if no Enumerator' do
+      expect(array2.my_each_with_index).not_to eq(Enumerator)
+    end
+    it 'should return false if iterates through an array and applies block instruction' do
+      expect(array2.my_each_with_index { |x| empty << x + 1 }).not_to eq(false)
+    end
+    it 'should return false if empty array if given one' do
+      expect([].my_each_with_index { |x| empty << x + 1 }).not_to eq(false)
     end
   end
 
   describe '#my_select' do
 
-    it 'should return an Enumerator' do
+    it 'should return an Enumerator for ' do
       expect(array1.my_select).to be_an Enumerator
     end
 
@@ -96,6 +105,18 @@ describe Enumerable do
     end
     it 'returns nil' do
       expect(nil_array.my_select(&:nil?)).to eq([nil])
+    end
+    it 'should return false if an Enumerator' do
+      expect(array1.my_select).not_to eq(Enumerator)
+    end
+    it 'returns elements false' do
+      expect(array2.my_select(&:even?)).not_to eq(true)
+    end
+    it 'returns false for an empty array' do
+      expect(empty.my_select(&:even?)).not_to eq(true)
+    end
+    it 'returns false for nil' do
+      expect(nil_array.my_select(&:nil?)).not_to eq(true)
     end
   end
 
