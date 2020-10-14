@@ -173,17 +173,17 @@ describe Enumerable do
     it 'returns false if the array is small' do
       expect(array2.my_all? { |x| x > 2 }).not_to eq(true)
     end
-    it 'should return false if the array is not equal to the value' do
-      expect(%w[ant bear cat].any? { |word| word.length >= 4 }).not_to eq(false)
-    end
   end
 
   describe '#my_any?' do
     it 'should return true for the the length' do
-      expect(%w[ant bear cat].any? { |word| word.length >= 3 }).to eq(true)
+      expect(%w[ant bear cat].my_any? { |word| word.length >= 3 }).to eq(true)
+    end
+    it 'should return false if the array is not equal to the value' do
+      expect(%w[ant bear cat].my_any? { |word| word.length >= 4 }).to eq(true)
     end
     it 'should return false if the word is not defined' do
-      expect(%w[ant bear cat].any? { |word| word == 'dog' }).to eq(false)
+      expect(%w[ant bear cat].my_any? { |word| word == 'dog' }).to eq(false)
     end
     it 'should return true for the array' do
       expect([1, 2, 3].my_any?).to eq(true)
@@ -201,6 +201,30 @@ describe Enumerable do
     end
     it 'should return false if empty array' do
       expect([].my_any?).to eq(false)
+    end
+    it 'should return true if the array is not equal to the value' do
+      expect(%w[ant bear cat].any? { |word| word.length >= 3 }).not_to eq(false)
+    end
+    it 'should return true if the array is not equal to length' do
+      expect(%w[ant bear cat].any? { |word| word.length >= 4 }).not_to eq(false)
+    end
+    it 'should return true if the word is not equal' do
+      expect(%w[ant bear cat].my_any? { |word| word == 'dog' }).not_to eq(true)
+    end
+    it 'should return false for the array' do
+      expect([1, 2, 3].my_any?).not_to eq(false)
+    end
+    it 'should return false if string given' do
+      expect(%w[hi hello hey].my_any?).not_to eq(false)
+    end
+    it 'should return true if nil or false' do
+      expect([nil, false].my_any?).not_to eq(true)
+    end
+    it 'should return true if nil ' do
+      expect([nil].my_any?).not_to eq(true)
+    end
+    it 'should return true if empty array' do
+      expect([].my_any?).not_to eq(true)
     end
   end
 
