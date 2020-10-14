@@ -17,7 +17,6 @@ describe Enumerable do
   let(:range) { (5..10) }
 
   describe '#my_each' do
-    describe 'it should return to Enumerator if there no block' do
       it 'returns an enumerator' do
         expect(array2.my_each).to be_an Enumerator
       end
@@ -57,9 +56,6 @@ describe Enumerable do
       it 'should not return to true if there no block' do
         expect(range.my_each).not_to eq(false)
       end
-    end
-
-    describe ' it should return arrays if there block' do
       it 'iterates through an array and applies block instruction' do
         expect(array2.my_each { |x| empty << x + 1 }).to eq(array2)
       end
@@ -69,82 +65,68 @@ describe Enumerable do
       it 'should return empty array if given one' do
         expect(empty).to eql([])
       end
-    end
   end
 
   describe '#my_each_with_index' do
-    context 'it should return to Enumerator if there no block' do
-      it 'returns an enumerator' do
-        expect(array2.my_each_with_index).to be_an Enumerator
-      end
+    it 'returns an enumerator' do
+      expect(array2.my_each_with_index).to be_an Enumerator
     end
-
-    context 'block' do
-      it 'iterates through an array and applies block instruction' do
-        expect(array2.my_each_with_index { |x| empty << x + 1 }).to eq(array2)
-      end
-      it 'should return empty array if given one' do
-        expect([].my_each_with_index { |x| empty << x + 1 }).to eq([])
-      end
-      it 'should return empty array if given one' do
-        expect(empty).to eql([])
-      end
+    it 'iterates through an array and applies block instruction' do
+      expect(array2.my_each_with_index { |x| empty << x + 1 }).to eq(array2)
+    end
+    it 'should return empty array if given one' do
+      expect([].my_each_with_index { |x| empty << x + 1 }).to eq([])
+    end
+    it 'should return empty array if given one' do
+      expect(empty).to eql([])
     end
   end
 
   describe '#my_select' do
-    context 'if no block' do
-      it 'should return an Enumerator' do
-        expect(array1.my_select).to be_an Enumerator
-      end
+
+    it 'should return an Enumerator' do
+      expect(array1.my_select).to be_an Enumerator
     end
 
-    context 'if block' do
-      it 'returns elements that block returns true' do
-        expect(array2.my_select(&:even?)).to eq([2, 8])
-      end
-      it 'returns an empty array' do
-        expect(empty.my_select(&:even?)).to eq(empty)
-      end
-      it 'returns nil' do
-        expect(nil_array.my_select(&:nil?)).to eq([nil])
-      end
+    it 'returns elements that block returns true' do
+      expect(array2.my_select(&:even?)).to eq([2, 8])
+    end
+    it 'returns an empty array' do
+      expect(empty.my_select(&:even?)).to eq(empty)
+    end
+    it 'returns nil' do
+      expect(nil_array.my_select(&:nil?)).to eq([nil])
     end
   end
 
   describe '#my_all?' do
-    context 'it should return nil and true if there is no block' do
-      it 'returns true when no elements are false or nil' do
-        expect(array2.my_all?).to eql(true)
-      end
-      it 'it should returns false when any elements are false or nil' do
-        expect(nil_array.my_all?).to eq(false)
-      end
+    it 'returns true when no elements are false or nil' do
+      expect(array2.my_all?).to eql(true)
+    end
+    it 'it should returns false when any elements are false or nil' do
+      expect(nil_array.my_all?).to eq(false)
+    end
+    it 'should returns true for  all' do
+      expect(array2.my_all?(&:positive?)).to eq(true)
+    end
+    it 'should returns true for the item' do
+      expect(array2.my_all? { |x| x }).to eq(true)
+    end
+    it ' it should returns true if the block nil' do
+      expect(false_array.my_all? { |x| x == false || x.nil? }).to eq(true)
     end
 
-    describe 'it should return true with block' do
-      it 'should returns true for  all' do
-        expect(array2.my_all?(&:positive?)).to eq(true)
-      end
-      it 'should returns true for the item' do
-        expect(array2.my_all? { |x| x }).to eq(true)
-      end
-      it ' it should returns true if the block nil' do
-        expect(false_array.my_all? { |x| x == false || x.nil? }).to eq(true)
-      end
-
-      it 'it should returns false if element returns false' do
-        expect(array2.my_all? { |x| x > 10 }).to eq(false)
-      end
-      it 'it should returns false if the eleemnt is nil' do
-        expect(nil_array.my_all? { |x| x }).to eq(false)
-      end
-      it 'returns false if the array is small' do
-        expect(array2.my_all? { |x| x > 2 }).to eq(false)
-      end
-      it 'should return true if the array is equal to the value' do
-        expect(%w[ant bear cat].any? { |word| word.length >= 4 }).to eq(true)
-      end
+    it 'it should returns false if element returns false' do
+      expect(array2.my_all? { |x| x > 10 }).to eq(false)
+    end
+    it 'it should returns false if the eleemnt is nil' do
+      expect(nil_array.my_all? { |x| x }).to eq(false)
+    end
+    it 'returns false if the array is small' do
+      expect(array2.my_all? { |x| x > 2 }).to eq(false)
+    end
+    it 'should return true if the array is equal to the value' do
+      expect(%w[ant bear cat].any? { |word| word.length >= 4 }).to eq(true)
     end
   end
 
