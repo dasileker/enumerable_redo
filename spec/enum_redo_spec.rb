@@ -149,6 +149,33 @@ describe Enumerable do
     it 'should return true if the array is equal to the value' do
       expect(%w[ant bear cat].any? { |word| word.length >= 4 }).to eq(true)
     end
+    it 'returns false when no elements are false or nil' do
+      expect(array2.my_all?).not_to eql(false)
+    end
+    it 'it should returns true when any elements are false or nil' do
+      expect(nil_array.my_all?).not_to eq(true)
+    end
+    it 'should returns false for  all' do
+      expect(array2.my_all?(&:positive?)).not_to eq(false)
+    end
+    it 'should returns false for the item' do
+      expect(array2.my_all? { |x| x }).not_to eq(false)
+    end
+    it ' it should returns false if the block nil' do
+      expect(false_array.my_all? { |x| x == false || x.nil? }).not_to eq(false)
+    end
+    it 'it should returns true if element returns false' do
+      expect(array2.my_all? { |x| x > 10 }).not_to eq(true)
+    end
+    it 'should returns true if the element is nil' do
+      expect(nil_array.my_all? { |x| x }).not_to eq(true)
+    end
+    it 'returns false if the array is small' do
+      expect(array2.my_all? { |x| x > 2 }).not_to eq(true)
+    end
+    it 'should return false if the array is not equal to the value' do
+      expect(%w[ant bear cat].any? { |word| word.length >= 4 }).not_to eq(false)
+    end
   end
 
   describe '#my_any?' do
