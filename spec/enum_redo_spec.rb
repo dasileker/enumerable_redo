@@ -248,6 +248,24 @@ describe Enumerable do
     it 'should return true if nil or false' do
       expect([nil, false].my_none?).to eq(true)
     end
+    it 'should return false if the srting array is equal the length' do
+      expect(%w[ant bear cat].my_none? { |word| word.length == 5 }).not_to eq(false)
+    end
+    it 'should return true if the string not equal to the less or equal than 4' do
+      expect(%w[ant bear cat].my_none? { |word| word.length >= 4 }).not_to eq(true)
+    end
+    it 'should return ftrue if nil' do
+      expect([true, nil].my_none?).not_to eq(true)
+    end
+    it 'should return false if empty array' do
+      expect([].my_none?).not_to eq(false)
+    end
+    it 'should return false if nil' do
+      expect([nil].my_none?).not_to eq(false)
+    end
+    it 'should return false if nil or false' do
+      expect([nil, false].my_none?).not_to eq(false)
+    end
   end
 
   describe '#my_count' do
@@ -272,6 +290,48 @@ describe Enumerable do
     it 'returns number of elements yielding a true value' do
       expect(false_array.my_count { |x| x.eql? nil }).to eq(2)
     end
+    it 'should return false if the elements not in array' do
+      expect(array2.my_count).not_to eq(true)
+    end
+    it 'should return true if the elements in array' do
+      expect(array2.my_count).not_to eq(false)
+    end
+    it 'should return the elements false if not equal to 3 in array' do
+      expect([1, 2, 3].my_count(3)).not_to eq(true)
+    end
+    it 'should return the elements true if equal to 3 in array' do
+      expect([1, 2, 3].my_count(3)).not_to eq(false)
+    end
+    it 'should return the elements  false if not equal to 0 array' do
+      expect(empty.my_count(3)).not_to eq(true)
+    end
+    it 'should return the elements  true if  equal to 0 array' do
+      expect(empty.my_count(3)).not_to eq(false)
+    end
+    it 'should return the elements false if not in array' do
+      expect(false_array.my_count(nil)).not_to eq(true)
+    end
+    it 'should return the elements true if its in array' do
+      expect(false_array.my_count(nil)).not_to eq(false)
+    end
+    it 'returns number of elements  false if not yielding a true value' do
+      expect(array2.my_count(&:even?)).not_to eq(true)
+    end
+    it 'returns number of elements  true if  yielding a true value' do
+      expect(array2.my_count(&:even?)).not_to eq(false)
+    end
+    it 'returns number of elements false if yielding a true value' do
+      expect(array2.my_count { |x| x.eql? 10 }).not_to eq(true)
+    end
+    it 'returns number of elements true if yielding a true value' do
+      expect(array2.my_count { |x| x.eql? 10 }).not_to eq(false)
+    end
+    it 'returns number of elements not yielding a true value' do
+      expect(false_array.my_count { |x| x.eql? nil }).not_to eq(true)
+    end
+    it 'returns number of elements true if yielding a true value' do
+      expect(false_array.my_count { |x| x.eql? nil }).not_to eq(false)
+    end
   end
 
   describe '#my_map' do
@@ -286,6 +346,30 @@ describe Enumerable do
     end
     it 'should get true and false' do
       expect((1..10).my_map { |i| i >= 3 && i <= 7 }).to eq([false, false, true, true, true, true, true, false, false, false])
+    end
+    it 'should get false if not multiply the range' do
+      expect((1..4).my_map { |i| i * i }).not_to eq(true)
+    end
+    it 'should get true if  multiply the range' do
+      expect((1..4).my_map { |i| i * i }).not_to eq(false)
+    end
+    it 'should return false if not cat cat cat' do
+      expect((1..4).my_map { 'cat' }).not_to eq(true)
+    end
+    it 'should return  true if cat cat cat' do
+      expect((1..4).my_map { 'cat' }).not_to eq(false)
+    end
+    it 'should return false if not multiplication for [1, 2, 3, 4]' do
+      expect((1..4).my_map(&block)).not_to eq(true)
+    end
+    it 'should return  true if multiplication for [1, 2, 3, 4]' do
+      expect((1..4).my_map(&block)).not_to eq(false)
+    end
+    it 'should get  false for true and false' do
+      expect((1..10).my_map { |i| i >= 3 && i <= 7 }).not_to eq(true)
+    end
+    it 'should get true if true and false' do
+      expect((1..10).my_map { |i| i >= 3 && i <= 7 }).not_to eq(false)
     end
   end
 
@@ -305,11 +389,47 @@ describe Enumerable do
     it 'it should return the multiply for  my_inject' do
       expect(array2.my_inject(2) { |product, x| product * x }).to eq(1120)
     end
+    it 'it should return false if  all elements are apply to block instructions' do
+      expect(array2.my_inject { |sum, x| sum + x }).not_to eq(true)
+    end
+    it 'should return true for all elements are in block instructions' do
+      expect(array2.my_inject { |sum, x| sum + x }).not_to eq(false)
+    end
+    it 'returns false if all instructions in my_inject' do
+      expect(array2.my_inject { |product, x| product * x }).not_to eql(true)
+    end
+    it 'returns  true for all instructions in my_inject' do
+      expect(array2.my_inject { |product, x| product * x }).not_to eql(false)
+    end
+    it 'returns false for all elements by applying block instructions to initial value ' do
+      expect(array2.my_inject(2) { |sum, x| sum + x }).not_to eq(true)
+    end
+    it 'returns true for  all elements by applying block instructions to initial value ' do
+      expect(array2.my_inject(2) { |sum, x| sum + x }).not_to eq(false)
+    end
+    it 'it should return false if its not the sum for my_inject' do
+      expect(array2.my_inject(0) { |sum, x| sum + x }).not_to eq(true)
+    end
+    it 'it should return  true for the sum in my_inject' do
+      expect(array2.my_inject(0) { |sum, x| sum + x }).not_to eq(false)
+    end
+    it 'it should return  fasle if not the multiply for  my_inject' do
+      expect(array2.my_inject(2) { |product, x| product * x }).not_to eq(true)
+    end
+    it 'it should return  true if its multiply for  my_inject' do
+      expect(array2.my_inject(2) { |product, x| product * x }).not_to eq(false)
+    end
   end
 
   describe '#multiply_els' do
     it 'it should return the multiply from the inject' do
       expect(arr.inject(:*)).to eq(40)
+    end
+    it 'it should return  false if its not the multiply from the inject' do
+      expect(arr.inject(:*)).not_to eq(true)
+    end
+    it 'it should return  true if its the multiply from the inject' do
+      expect(arr.inject(:*)).not_to eq(false)
     end
   end
 end
