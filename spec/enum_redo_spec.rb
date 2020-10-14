@@ -17,54 +17,54 @@ describe Enumerable do
   let(:range) { (5..10) }
 
   describe '#my_each' do
-      it 'returns an enumerator' do
-        expect(array2.my_each).to be_an Enumerator
-      end
-      it 'should not return to Enumerator for array' do
-        expect(array1.my_each).to be_an Enumerator
-      end
-      it 'should not return to Enumerator for range' do
-        expect(range.my_each).to be_an Enumerator
-      end
-      it 'should not return to Enumerator for hash' do
-        expect(hash.my_each).to be_an Enumerator
-      end
-      it 'should not return to Enumerator for nil' do
-        expect(nil_array.my_each).to be_an Enumerator
-      end
-      it 'should not return to Enumerator for nil in the array' do
-        expect(false_array.my_each).to be_an Enumerator
-      end
-      it 'should not return to Enumerator if array is empty' do
-        expect(empty.my_each).to be_an Enumerator
-      end
-      it 'should not return to false for epmty array' do
-        expect(empty.my_each).not_to eq(true)
-      end
-      it 'should not return to true for array' do
-        expect(empty.my_each).not_to eq(false)
-      end
-      it 'should not return to truer  in array' do
-        expect(false_array.my_each).not_to eq(false)
-      end
-      it 'should not return to false false in array' do
-        expect(false_array.my_each).not_to eq(true)
-      end
-      it 'should not return to false  in range' do
-        expect(range.my_each).not_to eq(true)
-      end
-      it 'should not return to true if there range' do
-        expect(range.my_each).not_to eq(false)
-      end
-      it 'iterates through an array and applies block instruction' do
-        expect(array2.my_each { |x| empty << x + 1 }).to eq(array2)
-      end
-      it 'should return empty array if given one' do
-        expect([].my_each { |x| empty << x + 1 }).to eq([])
-      end
-      it 'should return empty array if given one' do
-        expect(empty).to eql([])
-      end
+    it 'returns an enumerator' do
+      expect(array2.my_each).to be_an Enumerator
+    end
+    it 'should not return to Enumerator for array' do
+      expect(array1.my_each).to be_an Enumerator
+    end
+    it 'should not return to Enumerator for range' do
+      expect(range.my_each).to be_an Enumerator
+    end
+    it 'should not return to Enumerator for hash' do
+      expect(hash.my_each).to be_an Enumerator
+    end
+    it 'should not return to Enumerator for nil' do
+      expect(nil_array.my_each).to be_an Enumerator
+    end
+    it 'should not return to Enumerator for nil in the array' do
+      expect(false_array.my_each).to be_an Enumerator
+    end
+    it 'should not return to Enumerator if array is empty' do
+      expect(empty.my_each).to be_an Enumerator
+    end
+    it 'should not return to false for epmty array' do
+      expect(empty.my_each).not_to eq(true)
+    end
+    it 'should not return to true for array' do
+      expect(empty.my_each).not_to eq(false)
+    end
+    it 'should not return to truer  in array' do
+      expect(false_array.my_each).not_to eq(false)
+    end
+    it 'should not return to false false in array' do
+      expect(false_array.my_each).not_to eq(true)
+    end
+    it 'should not return to false  in range' do
+      expect(range.my_each).not_to eq(true)
+    end
+    it 'should not return to true if there range' do
+      expect(range.my_each).not_to eq(false)
+    end
+    it 'iterates through an array and applies block instruction' do
+      expect(array2.my_each { |x| empty << x + 1 }).to eq(array2)
+    end
+    it 'should return empty array if given one' do
+      expect([].my_each { |x| empty << x + 1 }).to eq([])
+    end
+    it 'should return empty array if given one' do
+      expect(empty).to eql([])
+    end
   end
 
   describe '#my_each_with_index' do
@@ -92,11 +92,9 @@ describe Enumerable do
   end
 
   describe '#my_select' do
-
     it 'should return an Enumerator for ' do
       expect(array1.my_select).to be_an Enumerator
     end
-
     it 'returns elements that block returns true' do
       expect(array2.my_select(&:even?)).to eq([2, 8])
     end
