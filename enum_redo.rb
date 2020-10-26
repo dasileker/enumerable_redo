@@ -1,5 +1,6 @@
 # rubocop : disable  Metrics/ModuleLength, Layout/EmptyLinesAroundModuleBody, Layout/EmptyLineAfterGuardClause,  Layout/EmptyLines,  Metrics/CyclomaticComplexity, Metrics/MethodLength, Layout/IndentationConsistency, Style/For, Layout/IndentationWidth, Style/NumericPredicate, Style/IfInsideElse, Style/InverseMethods, Style/IdenticalConditionalBranches, Metrics/PerceivedComplexity
 
+
 module Enumerable
 
   def my_each
@@ -93,87 +94,41 @@ module Enumerable
     result
   end
 
-  def my_inject(symbol = nil, initial_value = nil)
-    if symbol.class != Symbol
-      temp = symbol
-      symbol = initial_value
-      initial_value = temp
+  def my_inject(result = 0, symbol = nil)
+    symbol, result = result, symbol if result.is_a?(Symbol) and symbol.is_a?(Integer)
+    if result.is_a?(Symbol)
+      symbol = result
+      result = 0
     end
-    value_provided = false
-    value_provided = true unless initial_value.nil?
-    memo = initial_value || first
-    case symbol
-    when :+
-      if !value_provided
-        drop(1).my_each do |n|
-          memo += n
-        end
-      else
-        my_each do |n|
-          memo += n
-        end
+    new_array = to_a
+    result = '' if new_array[0].is_a?(String)
+    if !block_given?
+      case symbol
+      when :+
+        new_array.length.times { |n| result += new_array[n] }
+      when :*
+        new_array.length.times { |n| result *= new_array[n] }
+      when :/
+        new_array.length.times { |n| result /= new_array[n] }
+      when :-
+        new_array.length.times { |n| result -= new_array[n] }
+      when :**
+        new_array.length.times { |n| result **= new_array[n] }
+      when :%
+        new_array.length.times { |n| result %= new_array[n] }
       end
-    when :*
-      if !value_provided
-        drop(1).my_each do |n|
-          memo *= n
-        end
-      else
-        my_each do |n|
-          memo *= n
-        end
-      end
-    when :/
-      if !value_provided
-        drop(1).my_each do |n|
-          memo /= n
-        end
-      else
-        my_each do |n|
-          memo /= n
-        end
-      end
-    when :-
-      if !value_provided
-        drop(1).my_each do |n|
-          memo -= n
-        end
-      else
-        my_each do |n|
-          memo -= n
-        end
-      end
-    when :**
-      if !value_provided
-        drop(1).my_each do |n|
-          memo **= n
-        end
-      else
-        my_each do |n|
-          memo **= n
-        end
-      end
+      result
     else
-      if !value_provided
-        drop(1).my_each do |n|
-          memo = yield(memo, n)
-        end
-      else
-        my_each do |n|
-          memo = yield(memo, n)
-        end
-      end
+      new_array.length.times { |n| result = yield(result, new_array[n]) }
     end
-    memo
+    result
   end
+end
 
   def multiply_els(arr)
-    arr.my_inject do |memo, n|
-      memo * n
-    end
+  arr.my_inject { |x, y| x * y }
   end
 
 end
-
 
 # rubocop : enable  Metrics/ModuleLength, Layout/EmptyLinesAroundModuleBody, Layout/EmptyLineAfterGuardClause,  Layout/EmptyLines,  Metrics/CyclomaticComplexity, Metrics/MethodLength, Layout/IndentationConsistency, Style/For, Layout/IndentationWidth, Style/NumericPredicate, Style/IfInsideElse, Style/InverseMethods, Style/IdenticalConditionalBranches, Metrics/PerceivedComplexity

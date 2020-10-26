@@ -1,4 +1,4 @@
-# ruby-enum-methods
+# enum-methods-redo
 Add your new methods onto the existing Enumerable module
 > The aim of this project is to create an Enumerable module that gets mixed into the Array and Hash classes (among others) and provides you with lots of handy iterator methods. To prove that there's no magic to it, you're going to rebuild those methods.
 
@@ -40,7 +40,11 @@ Add your new methods onto the existing Enumerable module
 
 ## 🚀 Our Project
 
+
 Our project can be found at https://eb148b80-1a42-4a85-a23b-1c0d91d2294f.ws-eu01.gitpod.io/#/workspace/enumerable_redo
+=======
+Our project can be found at https://c2aceaa3-eb5a-42f2-92ec-dc911dd4e841.ws-eu01.gitpod.io/
+
 ## Live Demo
 
 [Live Demo Link](https://eb148b80-1a42-4a85-a23b-1c0d91d2294f.ws-eu01.gitpod.io/#/workspace/enumerable_redo)
@@ -50,9 +54,23 @@ Our project can be found at https://eb148b80-1a42-4a85-a23b-1c0d91d2294f.ws-eu01
 
 - clone the repository from here [repo link](git@github.com:dasileker/enumerable_redo.git)
 
-- Enter to GIT bash and hit: git clone git@github.com:ggotora/ruby_enum_methods.git
+- Enter to GIT bash and hit: git clone git@github.com:dasileker/enumerable_redo.git
 
 - Open vscode and you have it now
+
+
+## To run the Rspec
+
+- open the  "Git Bash" or the "WSL"
+
+- Install the Rspec by typing "gem install rspec"
+
+- Install bundle
+
+- Now run rspec insde the file
+
+<img alt="Demonstration" src="enum.gif"/>
+
 
 
 ## 👨🏽‍💻 👨🏿‍💻 Creators
